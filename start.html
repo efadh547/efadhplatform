@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة إفادة التعليمية</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .home-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(0, 180, 216, 0.4);
+        }
+
+        .language-switcher {
+            position: fixed;
+            top: 25px;
+            right: 25px;
+            padding: 10px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            padding-top: 100px;
+            padding-bottom: 60px;
+            flex: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+            background: url(3e50cb7e-3077-471a-8749-9864648da119.png) center/contain no-repeat;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .platform-name {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, #00b4d8, #90e0ef);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 6px rgba(0, 180, 216, 0.3);
+        }
+
+        .grades-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            padding: 2rem;
+        }
+
+        .grade-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            padding: 2rem 1rem;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .grade-btn:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 12px 40px rgba(0, 180, 216, 0.3);
+        }
+
+        .ai-search-container {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .ai-search {
+            padding: 15px 40px;
+            background: linear-gradient(45deg, #00b4d8, #90e0ef);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 180, 216, 0.3);
+            display: inline-block;
+        }
+
+        .ai-search:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(0, 180, 216, 0.5);
+        }
+
+        .faq-section {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 2rem;
+        }
+
+        .faq-title {
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #00b4d8;
+            text-shadow: 0 0 15px rgba(0, 180, 216, 0.3);
+        }
+
+        .faq-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            padding: 0 1.5rem;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+            background: rgba(0, 180, 216, 0.1);
+        }
+
+        .faq-answer.active {
+            max-height: 500px;
+            padding: 1.5rem;
+        }
+
+        .arrow-icon {
+            width: 20px;
+            height: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .arrow-icon.active {
+            transform: rotate(180deg);
+        }
+
+        /* أنماط قسم التحميل الجديدة */
+        .download-section {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .download-title {
+            font-size: 1.8rem;
+            color: #90e0ef;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 15px rgba(144, 224, 239, 0.3);
+        }
+
+        .download-badges {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .store-badge {
+            width: 200px;
+            height: auto;
+            transition: transform 0.3s ease;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .store-badge:hover {
+            transform: translateY(-5px);
+        }
+
+        /* أنماط الفوتر */
+        footer {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            margin-top: auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        .footer-links a {
+            color: #90e0ef;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.2rem;
+            align-items: center;
+        }
+
+        .social-icons img {
+            width: 30px;
+            height: 30px;
+            filter: invert(1);
+            opacity: 0.8;
+            transition: all 0.3s;
+        }
+
+        .social-icons a:hover img {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        .copyright {
+            text-align: center;
+            width: 100%;
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            color: #90e0ef;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @media (max-width: 768px) {
+            .platform-name {
+                font-size: 2rem;
+            }
+            .grades-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            .download-title {
+                font-size: 1.5rem;
+            }
+            .store-badge {
+                width: 180px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="start.html" class="home-button">
+        🏠 الرئيسية
+    </a>
+
+    <button class="language-switcher" id="languageBtn">
+        <span class="lang-text">English</span>
+        <span class="flag">🇺🇸</span>
+    </button>
+
+    <div class="container">
+        <header class="header">
+            <div class="logo"></div>
+            <h1 class="platform-name">منصة إفادة التعليمية</h1>
+        </header>
+
+        <div class="grades-grid">
+            <button class="grade-btn" data-grade="grade5">الصف الخامس</button>
+            <button class="grade-btn" data-grade="grade6">الصف السادس</button>
+            <button class="grade-btn" data-grade="grade7">الصف السابع</button>
+            <button class="grade-btn" data-grade="grade8">الصف الثامن</button>
+            <button class="grade-btn" data-grade="grade9">الصف التاسع</button>
+            <button class="grade-btn" data-grade="grade10">الصف العاشر</button>
+            <button class="grade-btn" data-grade="grade11">الصف الحادي عشر</button>
+            <button class="grade-btn" data-grade="grade12">الصف الثاني عشر</button>
+        </div>
+
+        <div class="ai-search-container">
+            <button class="ai-search" id="aiSearchBtn">
+                🔍 البحث بذكاء الاصطناعي
+            </button>
+        </div>
+
+        <div class="faq-section">
+            <h2 class="faq-title">الأسئلة الشائعة</h2>
+            
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>كيف يمكنني استخدام المنصة؟</span>
+                    <svg class="arrow-icon" viewBox="0 0 24 24" fill="white" width="24" height="24">
+                        <path d="M7 10l5 5 5-5z"/>
+                    </svg>
+                </div>
+                <div class="faq-answer">
+                    يمكنك اختيار صفك الدراسي من القائمة ثم اختيار المادة المطلوبة لبدء التعلم والحصول على الملخصات والاختبارات.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>هل المحتوى مجاني؟</span>
+                    <svg class="arrow-icon" viewBox="0 0 24 24" fill="white" width="24" height="24">
+                        <path d="M7 10l5 5 5-5z"/>
+                    </svg>
+                </div>
+                <div class="faq-answer">
+                    نعم، جميع المحتويات التعليمية متاحة مجاناً لجميع الطلاب.
+                </div>
+            </div>
+        </div>
+
+        <!-- قسم تحميل التطبيقات الجديد -->
+        <div class="download-section">
+            <h2 class="download-title">حقل منصة افادة وإبدأ في استخدام الملخصات و الاختبارات الآن!</h2>
+            <div class="download-badges">
+                <a href="https://play.google.com" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" 
+                         alt="متجر جوجل بلاي" 
+                         class="store-badge">
+                </a>
+                <a href="https://www.apple.com/app-store/" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Download_on_the_App_Store_Badge.svg" 
+                         alt="متجر آبل" 
+                         class="store-badge">
+                </a>
+            </div>
+        </div>
+    </div>
+
+<!-- ... باقي العناصر كما هي حتى قسم الفوتر ... -->
+
+<!-- قسم الفوتر -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-links">
+            <a href="#">سياسة الخصوصية</a>
+            <a href="#">دعوة وأحكام الخدمة</a>
+            <a href="#">الدعم</a>
+        </div>
+
+        <div class="social-icons">
+            <a href="https://www.instagram.com/efadh_2025platform/" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="انستجرام">
+            </a>
+            <a href="https://x.com/efadhplatporm" target="_blank">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/5/57/X_logo_2023_%28white%29.png" alt="منصة x">
+            </a>
+            <a href="mailto:efadhp@gmail.com?subject=رسالة جديدة&body=إلى: efadhp@gmail.com%0Aالموضوع: ">
+                <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="إرسال بريد">
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61575839814636" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="فيسبوك">
+            </a>
+            
+
+        </div>
+
+        <div class="copyright">
+            <p>© 2025 منصة إفادة التعليمية. جميع الحقوق محفوظة.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- ... باقي العناصر والاسكريبتات كما هي ... -->
+
+<!-- ... باقي العناصر والاسكريبتات كما هي ... -->
+
+
+
+    <script>
+        // تفعيل الأسئلة الشائعة
+        document.querySelectorAll('.faq-question').forEach(item => {
+            item.addEventListener('click', () => {
+                const parent = item.parentElement;
+                const answer = parent.querySelector('.faq-answer');
+                const arrow = item.querySelector('.arrow-icon');
+                
+                parent.classList.toggle('active');
+                answer.classList.toggle('active');
+                arrow.classList.toggle('active');
+            });
+        });
+
+        // تغيير اللغة
+        const translations = {
+            ar: {
+                home: "الرئيسية",
+                platformName: "منصة إفادة التعليمية",
+                aiSearch: "البحث بذكاء الاصطناعي",
+                grades: {
+                    grade5: "الصف الخامس",
+                    grade6: "الصف السادس",
+                    grade7: "الصف السابع",
+                    grade8: "الصف الثامن",
+                    grade9: "الصف التاسع",
+                    grade10: "الصف العاشر",
+                    grade11: "الصف الحادي عشر",
+                    grade12: "الصف الثاني عشر"
+                },
+                faq: {
+                    howToUse: "كيف يمكنني استخدام المنصة؟",
+                    contentFree: "هل المحتوى مجاني؟",
+                    // إضافة باقي النصوص العربية
+                }
+            },
+            en: {
+                home: "Home",
+                platformName: "Ifada Platform",
+                aiSearch: "AI-Powered Search",
+                grades: {
+                    grade5: "Grade 5",
+                    grade6: "Grade 6",
+                    grade7: "Grade 7",
+                    grade8: "Grade 8",
+                    grade9: "Grade 9",
+                    grade10: "Grade 10",
+                    grade11: "Grade 11",
+                    grade12: "Grade 12"
+                },
+                faq: {
+                    howToUse: "How to use the platform?",
+                    contentFree: "Is the content free?",
+                    // إضافة باقي النصوص الإنجليزية
+                }
+            }
+        };
+
+        let currentLang = 'ar';
+
+        function updateLanguage() {
+            // تحديث النصوص الرئيسية
+            document.querySelector('.platform-name').textContent = translations[currentLang].platformName;
+            document.getElementById('aiSearchBtn').textContent = `🔍 ${translations[currentLang].aiSearch}`;
+            document.querySelector('.home-button').innerHTML = `🏠 ${translations[currentLang].home}`;
+
+            // تحديث نصوص الصفوف
+            document.querySelectorAll('.grade-btn').forEach(btn => {
+                const gradeKey = btn.dataset.grade;
+                btn.textContent = translations[currentLang].grades[gradeKey];
+            });
+
+            // تحديث نصوص الأسئلة الشائعة
+            const faqQuestions = document.querySelectorAll('.faq-question span');
+            faqQuestions[0].textContent = translations[currentLang].faq.howToUse;
+            faqQuestions[1].textContent = translations[currentLang].faq.contentFree;
+        }
+
+        // تغيير اللغة
+        document.getElementById('languageBtn').addEventListener('click', () => {
+            currentLang = currentLang === 'ar' ? 'en' : 'ar';
+            document.documentElement.lang = currentLang;
+            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+            document.querySelector('#languageBtn .lang-text').textContent = currentLang === 'ar' ? 'English' : 'العربية';
+            updateLanguage();
+        });
+
+        // الانتقال إلى الصفوف
+        document.querySelectorAll('.grade-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const grade = this.dataset.grade;
+                const langSuffix = currentLang === 'ar' ? '' : '-en';
+                window.location.href = `${grade}${langSuffix}.html`;
+            });
+        });
+
+
+        // الانتقال إلى البحث بالذكاء الاصطناعي
+        document.getElementById('aiSearchBtn').addEventListener('click', () => {
+            window.location.href = 'ai-search.html';
+        });
+
+        // تأثيرات الأزرار
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', () => btn.style.transform = 'scale(0.95)');
+            btn.addEventListener('mouseup', () => btn.style.transform = '');
+            btn.addEventListener('mouseleave', () => btn.style.transform = '');
+        });
+         // تحقق إذا كانت هذه أول زيارة (مثلاً لا يوجد session)
+    if (!sessionStorage.getItem('visited')) {
+        sessionStorage.setItem('visited', 'true');
+        window.location.href = 'index.html'; // أو الصفحة الرئيسية التي تريدها
+    }
+
+    </script>
+</body>
+</html>

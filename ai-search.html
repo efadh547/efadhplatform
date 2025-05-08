@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>البحث الذكي - منصة إفادة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #00b4d8;
+            --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--bg-gradient);
+            color: white;
+        }
+
+        .home-button {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-box {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 2rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 1.2rem;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .search-button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .result-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <a href="start.html" class="home-button">
+        🏠 العودة للرئيسية
+    </a>
+
+    <div class="search-box">
+        <input type="text" class="search-input" placeholder="اكتب سؤالك هنا...">
+        <button class="search-button">🔍 بحث ذكي</button>
+        <div id="results"></div>
+    </div>
+
+    <script>
+        const API_KEY = 'sk-proj-cwds82r1wxf7yenhel5goppplawfkff9pjsgxff09pd15w0ndockzn7dyggmdnpyqtwwmrtao0t3blbkfj_dm-foy8rtnasf-roggpvxs3xx7ofbv7rbiog5qbmwseyk2sx6gfcbmtapmzfthep_no53_nsa'; // 🔴 استبدل بمفتاحك الحقيقي
+        
+        async function aiSearch(query) {
+            try {
+                const response = await fetch('https://api.openai.com/v1/chat/completions', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${API_KEY}`
+                    },
+                    body: JSON.stringify({
+                        model: "gpt-3.5-turbo",
+                        messages: [{ 
+                            role: "user", 
+                            content: `أجب بشكل منظم: ${query}`
+                        }]
+                    })
+                });
+                
+                const data = await response.json();
+                return data.choices[0].message.content;
+            } catch (error) {
+                return 'حدث خطأ: ' + error.message;
+            }
+        }
+        
+        document.querySelector('.search-button').addEventListener('click', async () => {
+            const input = document.querySelector('.search-input');
+            const results = document.getElementById('results');
+            
+            results.innerHTML = '<div class="result-card">جاري البحث...</div>';
+            
+            try {
+                const response = await aiSearch(input.value);
+                results.innerHTML = `<div class="result-card">${response}</div>`;
+            } catch (error) {
+                results.innerHTML = `<div class="result-card error">${error}</div>`;
+            }
+        });
+        
+    // تحقق إذا كانت هذه أول زيارة (مثلاً لا يوجد session)
+    if (!sessionStorage.getItem('visited')) {
+        sessionStorage.setItem('visited', 'true');
+        window.location.href = 'index.html'; // أو الصفحة الرئيسية التي تريدها
+    }
+
+
+
+        </script>
+</body>
+</html>
