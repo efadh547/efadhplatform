@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تواصل معنا - منصة إفادة</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-bg: #1a1a2e;
+            --secondary-bg: #16213e;
+            --accent-color: #64ffda;
+            --text-primary: #ccd6f6;
+            --whatsapp-green: #25D366;
+            --instagram-purple: #E1306C;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--primary-bg), var(--secondary-bg));
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            width: 90%;
+            margin: 4rem auto;
+            text-align: center;
+        }
+
+        .contact-header {
+            margin-bottom: 3rem;
+        }
+
+        .contact-header h1 {
+            font-size: 2.5rem;
+            background: linear-gradient(45deg, var(--accent-color), #00a8cc);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .social-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: transform 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .social-card.whatsapp {
+            border-color: var(--whatsapp-green);
+            box-shadow: 0 0 30px rgba(37, 211, 102, 0.1);
+        }
+
+        .social-card.instagram {
+            border-color: var(--instagram-purple);
+            box-shadow: 0 0 30px rgba(225, 48, 108, 0.1);
+        }
+
+        .social-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .social-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .whatsapp .social-icon {
+            color: var(--whatsapp-green);
+        }
+
+        .instagram .social-icon {
+            color: var(--instagram-purple);
+        }
+
+        .social-btn {
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+            margin: 1.5rem 0;
+        }
+
+        .whatsapp-btn {
+            background: var(--whatsapp-green);
+            color: white !important;
+        }
+
+        .instagram-btn {
+            background: var(--instagram-purple);
+            color: white !important;
+        }
+
+        .social-btn:hover {
+            filter: brightness(1.1);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .response-info {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            margin-top: 2rem;
+        }
+
+        .working-hours {
+            margin-top: 3rem;
+            padding: 1.5rem;
+            border-top: 2px solid var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .contact-header h1 {
+                font-size: 2rem;
+            }
+            
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .social-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="contact-container">
+        <div class="contact-header">
+            <h1>قنوات التواصل الرسمية</h1>
+            <p>اختر القناة المناسبة للتواصل مع فريق الدعم</p>
+        </div>
+
+        <div class="social-grid">
+            <!-- بطاقة واتساب -->
+            <div class="social-card whatsapp">
+                <i class="fab fa-whatsapp social-icon"></i>
+                <h2>الدعم عبر واتساب</h2>
+                <p>تواصل مباشر مع فريق الدعم الفني</p>
+                
+                <a href="#" class="social-btn whatsapp-btn" target="_blank">
+                    <i class="fab fa-whatsapp"></i>
+                    ابدأ المحادثة
+                </a>
+
+                <div class="response-info">
+                    <p><i class="fas fa-clock"></i> متوسط وقت الاستجابة: ١٥ دقيقة</p>
+                    <p><i class="fas fa-headset"></i> دعم فني على مدار الساعة</p>
+                </div>
+            </div>
+
+            <!-- بطاقة إنستجرام -->
+            <div class="social-card instagram">
+                <i class="fab fa-instagram social-icon"></i>
+                <h2>تابعنا على إنستجرام</h2>
+                <p>للحصول على آخر التحديثات والعروض</p>
+                
+                <a href="https://www.instagram.com/direct/t/17842511232475324" class="social-btn instagram-btn" target="_blank">
+                    <i class="fab fa-instagram"></i>
+                    زيارة الصفحة
+                </a>
+
+                <div class="response-info">
+                    <p><i class="fas fa-comment-dots"></i> ردود خلال ٢٤ ساعة</p>
+                    <p><i class="fas fa-hashtag"></i> #efadhplatform</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="working-hours">
+            <h3>أوقات العمل الرسمية:</h3>
+            <p>⏰ من الأحد إلى الخميس: 8 صباحًا - 8 مساءً</p>
+            <p>🗓️ الجمعة والسبت: إجازة رسمية</p>
+        </div>
+    </div>
+</body>
+</html>
