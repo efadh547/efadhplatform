@@ -2,8 +2,8 @@
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fifth Grade - Ifada Learning Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>eleven Grade - Ifada Platform</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;700&display=swap" rel="stylesheet">
     <style>
         .home-btn {
@@ -30,26 +30,6 @@
             box-shadow: 0 6px 20px rgba(0, 180, 216, 0.4);
         }
 
-        .home-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                120deg,
-                transparent,
-                rgba(255, 255, 255, 0.1),
-                transparent
-            );
-            transition: 0.6s;
-        }
-
-        .home-btn:hover::before {
-            left: 100%;
-        }
-
         * {
             margin: 0;
             padding: 0;
@@ -64,7 +44,7 @@
             justify-content: center;
             align-items: center;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
         }
 
         .glowing-effect {
@@ -152,32 +132,13 @@
             overflow: hidden;
             backdrop-filter: blur(8px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-
-        .semester-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                120deg,
-                transparent,
-                rgba(255, 255, 255, 0.1),
-                transparent
-            );
-            transition: 0.6s;
+            touch-action: manipulation;
         }
 
         .semester-btn:hover {
             background: rgba(255, 255, 255, 0.1);
             transform: translateY(-5px);
             box-shadow: 0 15px 45px rgba(0, 180, 216, 0.4);
-        }
-
-        .semester-btn:hover::before {
-            left: 100%;
         }
 
         @keyframes glow-move {
@@ -187,12 +148,55 @@
 
         @media (max-width: 768px) {
             .platform-name {
-                font-size: 2rem;
+                font-size: 1.8rem;
+                margin-bottom: 1.5rem;
+            }
+            
+            .logo-container {
+                width: 120px;
+                height: 120px;
+                margin-bottom: 1rem;
             }
             
             .semester-btn {
-                font-size: 1.4rem;
-                padding: 2rem;
+                flex: 1 1 100%;
+                padding: 1.5rem;
+                font-size: 1.2rem;
+                border-radius: 15px;
+                backdrop-filter: none;
+            }
+            
+            .buttons-container {
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+            
+            .home-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            
+            .glowing-effect {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .platform-name {
+                font-size: 1.5rem;
+            }
+            
+            .semester-btn {
+                padding: 1.2rem;
+                min-height: 60px;
             }
         }
     </style>
@@ -215,28 +219,31 @@
     </div>
 
     <script>
+        // Glow effect for large screens only
+        const glow = document.querySelector('.glowing-effect');
+        if (window.matchMedia("(min-width: 769px)").matches) {
+            document.addEventListener('mousemove', (e) => {
+                glow.style.left = e.pageX + 'px';
+                glow.style.top = e.pageY + 'px';
+            });
+        }
+
+        // Button click effect
         document.querySelectorAll('.semester-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 this.style.transform = 'scale(0.95)';
                 setTimeout(() => {
-                    const targetLink = this.dataset.link;
-                    window.location.href = targetLink;
+                    window.location.href = this.dataset.link;
                 }, 300);
             });
         });
 
-        // Glow effect management
-        const glow = document.querySelector('.glowing-effect');
-        document.addEventListener('mousemove', (e) => {
-            glow.style.left = e.pageX + 'px';
-            glow.style.top = e.pageY + 'px';
-        });
-         // تحقق إذا كانت هذه أول زيارة (مثلاً لا يوجد session)
-    if (!sessionStorage.getItem('visited')) {
-        sessionStorage.setItem('visited', 'true');
-        window.location.href = 'index.html'; // أو الصفحة الرئيسية التي تريدها
-    }
-
+        // First visit session management
+        if (!sessionStorage.getItem('visited')) {
+            sessionStorage.setItem('visited', 'true');
+            window.location.href = 'index.html';
+        }
     </script>
 </body>
 </html>
+
