@@ -1,12 +1,14 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
+       <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة إفادة التعليمية</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.19.0/js/md5.min.js"></script>
     <style>
-        * {
+                * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -19,33 +21,6 @@
             color: white;
             display: flex;
             flex-direction: column;
-        }
-
-        .home-button {
-            position: fixed;
-            top: 25px;
-            left: 25px;
-            padding: 12px 30px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-            border-radius: 30px;
-            color: white;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .home-button:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(0, 180, 216, 0.4);
         }
 
         .language-switcher {
@@ -61,10 +36,10 @@
             cursor: pointer;
             transition: all 0.3s ease;
             z-index: 1000;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
             gap: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
         .container {
@@ -72,7 +47,6 @@
             margin: 0 auto;
             padding: 2rem;
             padding-top: 100px;
-            padding-bottom: 60px;
             flex: 1;
         }
 
@@ -90,9 +64,16 @@
             width: 120px;
             height: 120px;
             margin: 0 auto 1rem;
-            background: url(3e50cb7e-3077-471a-8749-9864648da119.png) center/contain no-repeat;
-            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
-            animation: float 3s ease-in-out infinite;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        .logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
 
         .platform-name {
@@ -208,7 +189,6 @@
             transform: rotate(180deg);
         }
 
-        /* أنماط قسم التحميل الجديدة */
         .download-section {
             max-width: 800px;
             margin: 3rem auto;
@@ -242,7 +222,6 @@
             transform: translateY(-5px);
         }
 
-        /* أنماط الفوتر */
         footer {
             background: rgba(255, 255, 255, 0.05);
             padding: 2rem;
@@ -303,6 +282,72 @@
             color: #90e0ef;
         }
 
+        .account-menu {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 1000;
+        }
+
+        .profile-image {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-image:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 25px rgba(0, 180, 216, 0.4);
+        }
+
+        .account-dropdown {
+            position: absolute;
+            top: 65px;
+            left: 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 1rem;
+            min-width: 200px;
+            display: none;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .account-dropdown.show {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .dropdown-item {
+            padding: 0.8rem 1rem;
+            color: white;
+            text-decoration: none;
+            display: block;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+        }
+
+        .dropdown-item:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-15px); }
@@ -327,21 +372,38 @@
                 width: 180px;
             }
         }
+        [lang="en"] .rtl-text {
+            direction: ltr;
+            text-align: left;
+        }
+        
+        [lang="en"] .grade-btn,
+        [lang="en"] .ai-search,
+        [lang="en"] .dropdown-item {
+            font-family: 'Tajawal', sans-serif;
+        }
     </style>
 </head>
 <body>
-    <a href="start.html" class="home-button">
-        🏠 الرئيسية
-    </a>
-
-    <button class="language-switcher" id="languageBtn">
+        <button class="language-switcher" id="languageBtn">
         <span class="lang-text">English</span>
-        <span class="flag"></span>
     </button>
+
+    <div class="account-menu">
+        <div class="profile-image" id="profileImage"></div>
+        <div class="account-dropdown" id="accountDropdown">
+            <div class="dropdown-item" style="color:#90e0ef;pointer-events:none;">الحساب</div>
+            <a href="connection.html" class="dropdown-item" id="supportLink">الدعم</a>
+            <a href="index.html" class="dropdown-item">تسجيل الخروج</a>
+            <div class="dropdown-item" style="font-size:0.8em;opacity:0.7;text-align:center;">efada</div>
+        </div>
+    </div>
 
     <div class="container">
         <header class="header">
-            <div class="logo"></div>
+            <div class="logo">
+                <img id="mainLogoImg" src="3e50cb7e-3077-471a-8749-9864648da119.png" alt="شعار">
+            </div>
             <h1 class="platform-name">منصة إفادة التعليمية</h1>
         </header>
 
@@ -357,9 +419,7 @@
         </div>
 
         <div class="ai-search-container">
-            <button class="ai-search" id="aiSearchBtn">
-                🔍 البحث بذكاء الاصطناعي
-            </button>
+            <button class="ai-search" id="aiSearchBtn">🔍 البحث بذكاء الاصطناعي</button>
         </div>
 
         <div class="faq-section">
@@ -390,9 +450,8 @@
             </div>
         </div>
 
-        <!-- قسم تحميل التطبيقات الجديد -->
         <div class="download-section">
-            <h2 class="download-title">حقل منصة افادة وإبدأ في استخدام الملخصات و الاختبارات الآن!</h2>
+            <h2 class="download-title">حمل منصة افادة وإبدأ في استخدام الملخصات و الاختبارات الآن!</h2>
             <div class="download-badges">
                 <a href="https://play.google.com" target="_blank">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" 
@@ -408,160 +467,206 @@
         </div>
     </div>
 
-<!-- ... باقي العناصر كما هي حتى قسم الفوتر ... -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">سياسة الخصوصية</a>
+                <a href="#">دعوة وأحكام الخدمة</a>
+                <a href="connection.html">الدعم</a>
+            </div>
 
-<!-- قسم الفوتر -->
-<footer>
-    <div class="footer-content">
-        <div class="footer-links">
-            <a href="#">سياسة الخصوصية</a>
-            <a href="#">دعوة وأحكام الخدمة</a>
-            <a href="connection.html">الدعم</a>
+            <div class="social-icons">
+                <a href="https://www.instagram.com/efadh_2025platform/" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="انستجرام">
+                </a>
+                <a href="https://x.com/efadhplatporm" target="_blank">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/57/X_logo_2023_%28white%29.png" alt="منصة x">
+                </a>
+                <a href="mailto:efadhp@gmail.com?subject=رسالة جديدة&body=إلى: efadhp@gmail.com%0Aالموضوع: ">
+                    <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="إرسال بريد">
+                </a>
+                <a href="https://www.facebook.com/profile.php?id=61575839814636" target="_blank">
+                    <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="فيسبوك">
+                </a>
+            </div>
+
+            <div class="copyright">
+                <p>© 2025 منصة إفادة التعليمية. جميع الحقوق محفوظة.</p>
+            </div>
         </div>
+    </footer>
 
-        <div class="social-icons">
-            <a href="https://www.instagram.com/efadh_2025platform/" target="_blank">
-                <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="انستجرام">
-            </a>
-            <a href="https://x.com/efadhplatporm" target="_blank">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/5/57/X_logo_2023_%28white%29.png" alt="منصة x">
-            </a>
-            <a href="mailto:efadhp@gmail.com?subject=رسالة جديدة&body=إلى: efadhp@gmail.com%0Aالموضوع: ">
-                <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="إرسال بريد">
-            </a>
-            <a href="https://www.facebook.com/profile.php?id=61575839814636" target="_blank">
-                <img src="https://cdn-icons-png.flaticon.com/512/124/124010.png" alt="فيسبوك">
-            </a>
-            
-
-        </div>
-
-        <div class="copyright">
-            <p>© 2025 منصة إفادة التعليمية. جميع الحقوق محفوظة.</p>
-        </div>
-    </div>
-</footer>
-
-<!-- ... باقي العناصر والاسكريبتات كما هي ... -->
-
-<!-- ... باقي العناصر والاسكريبتات كما هي ... -->
-
-
-
-    <script>
-        // تفعيل الأسئلة الشائعة
-        document.querySelectorAll('.faq-question').forEach(item => {
-            item.addEventListener('click', () => {
-                const parent = item.parentElement;
-                const answer = parent.querySelector('.faq-answer');
-                const arrow = item.querySelector('.arrow-icon');
-                
-                parent.classList.toggle('active');
-                answer.classList.toggle('active');
-                arrow.classList.toggle('active');
-            });
-        });
-
-        // تغيير اللغة
-        const translations = {
-            ar: {
-                home: "الرئيسية",
-                platformName: "منصة إفادة التعليمية",
-                aiSearch: "البحث بذكاء الاصطناعي",
-                grades: {
-                    grade5: "الصف الخامس",
-                    grade6: "الصف السادس",
-                    grade7: "الصف السابع",
-                    grade8: "الصف الثامن",
-                    grade9: "الصف التاسع",
-                    grade10: "الصف العاشر",
-                    grade11: "الصف الحادي عشر",
-                    grade12: "الصف الثاني عشر"
-                },
-                faq: {
-                    howToUse: "كيف يمكنني استخدام المنصة؟",
-                    contentFree: "هل المحتوى مجاني؟",
-                    // إضافة باقي النصوص العربية
-                }
-            },
-            en: {
-                home: "Home",
-                platformName: "Ifada Platform",
-                aiSearch: "AI-Powered Search",
-                grades: {
-                    grade5: "Grade 5",
-                    grade6: "Grade 6",
-                    grade7: "Grade 7",
-                    grade8: "Grade 8",
-                    grade9: "Grade 9",
-                    grade10: "Grade 10",
-                    grade11: "Grade 11",
-                    grade12: "Grade 12"
-                },
-                faq: {
-                    howToUse: "How to use the platform?",
-                    contentFree: "Is the content free?",
-                    // إضافة باقي النصوص الإنجليزية
-                }
-            }
-        };
-
-        let currentLang = 'ar';
-
-        function updateLanguage() {
-            // تحديث النصوص الرئيسية
-            document.querySelector('.platform-name').textContent = translations[currentLang].platformName;
-            document.getElementById('aiSearchBtn').textContent = `🔍 ${translations[currentLang].aiSearch}`;
-            document.querySelector('.home-button').innerHTML = `🏠 ${translations[currentLang].home}`;
-
-            // تحديث نصوص الصفوف
-            document.querySelectorAll('.grade-btn').forEach(btn => {
-                const gradeKey = btn.dataset.grade;
-                btn.textContent = translations[currentLang].grades[gradeKey];
-            });
-
-            // تحديث نصوص الأسئلة الشائعة
-            const faqQuestions = document.querySelectorAll('.faq-question span');
-            faqQuestions[0].textContent = translations[currentLang].faq.howToUse;
-            faqQuestions[1].textContent = translations[currentLang].faq.contentFree;
-        }
-
-        // تغيير اللغة
-        document.getElementById('languageBtn').addEventListener('click', () => {
-            currentLang = currentLang === 'ar' ? 'en' : 'ar';
-            document.documentElement.lang = currentLang;
-            document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
-            document.querySelector('#languageBtn .lang-text').textContent = currentLang === 'ar' ? 'English' : 'العربية';
-            updateLanguage();
-        });
-
-        // الانتقال إلى الصفوف
-        document.querySelectorAll('.grade-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const grade = this.dataset.grade;
-                const langSuffix = currentLang === 'ar' ? '' : '-en';
-                window.location.href = `${grade}${langSuffix}.html`;
-            });
-        });
-
-
-        // الانتقال إلى البحث بالذكاء الاصطناعي
-        document.getElementById('aiSearchBtn').addEventListener('click', () => {
-            window.location.href = 'ai-search.html';
-        });
-
-        // تأثيرات الأزرار
-        document.querySelectorAll('button').forEach(btn => {
-            btn.addEventListener('mousedown', () => btn.style.transform = 'scale(0.95)');
-            btn.addEventListener('mouseup', () => btn.style.transform = '');
-            btn.addEventListener('mouseleave', () => btn.style.transform = '');
-        });
-         // تحقق إذا كانت هذه أول زيارة (مثلاً لا يوجد session)
-    if (!sessionStorage.getItem('visited')) {
-        sessionStorage.setItem('visited', 'true');
-        window.location.href = 'index.html'; // أو الصفحة الرئيسية التي تريدها
+<script>
+    // عرض الأحرف الأولى في صورة الحساب
+    const storedEmail = localStorage.getItem('currentEmail');
+    const profileImage = document.getElementById('profileImage');
+    
+    if (storedEmail) {
+        // استخراج أول حرفين من الجزء قبل @ في البريد
+        const usernamePart = storedEmail.split('@')[0];
+        const initials = usernamePart.slice(0, 2).toUpperCase();
+        
+        // إضافة الأحرف للعنصر
+        profileImage.textContent = initials;
+        
+        // إزالة أي خلفية للصورة
+        profileImage.style.backgroundImage = 'none';
+        profileImage.style.backgroundColor = '#1a1a2e'; // لون متناسق مع التصميم
+        
+        // إضافة تأثير ظل للنص
+        profileImage.style.textShadow = '0 2px 4px rgba(0, 0, 0, 0.3)';
     }
 
-    </script>
+    const translations = {
+        ar: {
+            platformName: "منصة إفادة التعليمية",
+            aiSearch: "البحث بذكاء الاصطناعي",
+            support: "الدعم",
+            grades: {
+                grade5:"الصف الخامس", grade6:"الصف السادس", grade7:"الصف السابع",
+                grade8:"الصف الثامن", grade9:"الصف التاسع", grade10:"الصف العاشر",
+                grade11:"الصف الحادي عشر", grade12:"الصف الثاني عشر"
+            },
+            faq: {
+                title: "الأسئلة الشائعة",
+                howToUse:"كيف يمكنني استخدام المنصة؟",
+                contentFree:"هل المحتوى مجاني؟",
+                howAnswer: "يمكنك اختيار صفك الدراسي من القائمة ثم اختيار المادة المطلوبة لبدء التعلم والحصول على الملخصات والاختبارات.",
+                freeAnswer: "نعم، جميع المحتويات التعليمية متاحة مجاناً لجميع الطلاب."
+            },
+            footer: {
+                privacy: "سياسة الخصوصية",
+                terms: "شروط الخدمة",
+                support: "الدعم",
+                copyright: "© 2025 منصة إفادة التعليمية. جميع الحقوق محفوظة.",
+                download: "حمل المنصة الآن"
+            },
+            account: {
+                account: "الحساب",
+                support: "الدعم",
+                logout: "تسجيل الخروج"
+            }
+        },
+        en: {
+            platformName: "Ifada Educational Platform",
+            aiSearch: "AI-Powered Search",
+            support: "Support",
+            grades: {
+                grade5:"Grade 5", grade6:"Grade 6", grade7:"Grade 7",
+                grade8:"Grade 8", grade9:"Grade 9", grade10:"Grade 10",
+                grade11:"Grade 11", grade12:"Grade 12"
+            },
+            faq: {
+                title: "Frequently Asked Questions",
+                howToUse:"How to use the platform?",
+                contentFree:"Is the content free?",
+                howAnswer: "Select your grade from the list, then choose the subject to start learning with summaries and tests.",
+                freeAnswer: "Yes, all educational content is free for all students."
+            },
+            footer: {
+                privacy: "Privacy Policy",
+                terms: "Terms of Service",
+                support: "Support",
+                copyright: "© 2025 Ifada Platform. All rights reserved.",
+                download: "Download Now"
+            },
+            account: {
+                account: "Account",
+                support: "Support",
+                logout: "Logout"
+            }
+        }
+    };
+
+    let currentLang = 'ar';
+    
+    function updateLanguage() {
+        // تحديث العناصر الرئيسية
+        document.querySelector('.platform-name').textContent = translations[currentLang].platformName;
+        document.getElementById('aiSearchBtn').textContent = `🔍 ${translations[currentLang].aiSearch}`;
+        document.querySelector('.faq-title').textContent = translations[currentLang].faq.title;
+        document.querySelector('.download-title').textContent = translations[currentLang].footer.download;
+        document.getElementById('supportLink').textContent = translations[currentLang].account.support;
+
+
+        // تحديث أزرار الصفوف
+        document.querySelectorAll('.grade-btn').forEach(btn => {
+            btn.textContent = translations[currentLang].grades[btn.dataset.grade];
+        });
+
+        // تحديث الأسئلة الشائعة
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems[0].querySelector('span').textContent = translations[currentLang].faq.howToUse;
+        faqItems[0].querySelector('.faq-answer').textContent = translations[currentLang].faq.howAnswer;
+        faqItems[1].querySelector('span').textContent = translations[currentLang].faq.contentFree;
+        faqItems[1].querySelector('.faq-answer').textContent = translations[currentLang].faq.freeAnswer;
+
+        // تحديث التذييل
+        const footerLinks = document.querySelectorAll('.footer-links a');
+        footerLinks[0].textContent = translations[currentLang].footer.privacy;
+        footerLinks[1].textContent = translations[currentLang].footer.terms;
+        footerLinks[2].textContent = translations[currentLang].footer.support;
+        document.querySelector('.copyright p').textContent = translations[currentLang].footer.copyright;
+
+        // تحديث القائمة المنسدلة
+        const dropdownItems = document.querySelectorAll('.dropdown-item');
+        dropdownItems[0].textContent = translations[currentLang].account.account;
+        dropdownItems[2].textContent = translations[currentLang].account.logout;
+
+        // تحديث اتجاه الصفحة
+        document.documentElement.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+        document.documentElement.lang = currentLang;
+    }
+
+    // حدث تبديل اللغة
+    document.getElementById('languageBtn').addEventListener('click', () => {
+        currentLang = currentLang === 'ar' ? 'en' : 'ar';
+        document.querySelector('#languageBtn .lang-text').textContent = currentLang === 'ar' ? 'English' : 'العربية';
+        updateLanguage();
+    });
+   
+    // التنقل بين الصفوف والبحث
+    document.querySelectorAll('.grade-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const suffix = currentLang === 'ar' ? '' : '-en';
+            window.location.href = `${this.dataset.grade}${suffix}.html`;
+        });
+    });
+
+    document.getElementById('aiSearchBtn').addEventListener('click', () => {
+        window.location.href = 'ai-search.html';
+    });
+
+    // تفعيل الأسئلة الشائعة
+    document.querySelectorAll('.faq-question').forEach(item => {
+        item.addEventListener('click', () => {
+            const parent = item.parentElement;
+            const answer = parent.querySelector('.faq-answer');
+            const arrow = item.querySelector('.arrow-icon');
+            
+            parent.classList.toggle('active');
+            answer.classList.toggle('active');
+            arrow.classList.toggle('active');
+        });
+    });
+    // إدارة الجلسة للزيارة الأولى
+    if (!sessionStorage.getItem('visited')) {
+        sessionStorage.setItem('visited', 'true');
+        window.location.href = 'index.html';
+    }
+      const profileImageEl = document.getElementById("profileImage");
+    const accountDropdownEl = document.getElementById("accountDropdown");
+
+    profileImageEl.addEventListener("click", () => {
+        accountDropdownEl.classList.toggle("show");
+    });
+
+    
+
+    
+   
+
+
+</script>
 </body>
 </html>
