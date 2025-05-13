@@ -31,7 +31,6 @@
             align-items: center;
         }
 
-        /* أنماط زر العودة */
         .back-button {
             position: fixed;
             top: 30px;
@@ -126,6 +125,7 @@
             gap: 1rem;
             transition: all 0.3s ease;
             margin: 1.5rem 0;
+            cursor: pointer;
         }
 
         .whatsapp-btn {
@@ -192,13 +192,13 @@
         </div>
 
         <div class="social-grid">
-            <!-- بطاقة واتساب -->
+            <!-- بطاقة واتساب معطلة -->
             <div class="social-card whatsapp">
                 <i class="fab fa-whatsapp social-icon"></i>
                 <h2>الدعم عبر واتساب</h2>
                 <p>تواصل مباشر مع فريق الدعم الفني</p>
                 
-                <a href="#" class="social-btn whatsapp-btn" target="_blank">
+                <a href="javascript:void(0);" class="social-btn whatsapp-btn" onclick="handleWhatsappClick(event)">
                     <i class="fab fa-whatsapp"></i>
                     ابدأ المحادثة
                 </a>
@@ -235,10 +235,27 @@
     </div>
 
     <script>
+        // دالة التعامل مع النقر على واتساب
+        function handleWhatsappClick(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            alert('نعتذر، خدمة الدعم عبر واتساب غير متاحة حاليًا. الرجاء استخدام قنوات الدعم الأخرى.');
+        }
+
         // إدارة الجلسة للزيارة الأولى
         if (!sessionStorage.getItem('visited')) {
             sessionStorage.setItem('visited', 'true');
             window.location.href = 'index.html';
+        }
+
+        // إدارة القائمة المنسدلة للحساب
+        const profileImageEl = document.getElementById("profileImage");
+        const accountDropdownEl = document.getElementById("accountDropdown");
+
+        if(profileImageEl && accountDropdownEl) {
+            profileImageEl.addEventListener("click", () => {
+                accountDropdownEl.classList.toggle("show");
+            });
         }
     </script>
 </body>
