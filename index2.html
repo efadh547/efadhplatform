@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
+        /* إضافة هذا الجزء لإخفاء الأحرف الأولى */
+        .email-badge {
+            display: none !important;
+        }
+
+        /* بقية الأنماط كما هي */
         :root {
             --primary-bg: #1a1a2e;
             --secondary-bg: #16213e;
@@ -31,6 +37,7 @@
             justify-content: center;
             align-items: center;
             position: relative;
+            overflow-y: auto;
         }
         .platform-logo {
             position: absolute;
@@ -38,17 +45,17 @@
             width: 100px;
             height: 100px;
             border-radius: 50%;
-            background: linear-gradient(45deg, var(--accent-color), #00a8cc);
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3);
+            background: #fff;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3);
         }
         .platform-logo img {
-            width: 60%;
-            height: 60%;
-            object-fit: contain;
-            filter: none;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .registration-card {
             background: rgba(255, 255, 255, 0.05);
@@ -167,8 +174,10 @@
 </head>
 <body>
     <div class="platform-logo">
-        <img src="3e50cb7e-3077-471a-8749-9864648da119.png" alt="شعار إفادة">
+        <img id="logoImg" src="3e50cb7e-3077-471a-8749-9864648da119.png" alt="شعار إفادة">
     </div>
+
+    <div class="email-badge" id="emailBadge"></div>
 
     <div class="registration-card">
         <div class="card-header">
@@ -235,53 +244,66 @@
             }
         }
 
+        // تم تعطيل هذا الجزء من الكود
+        /*
+        const emailInput = document.getElementById('email');
+        const emailBadge = document.getElementById('emailBadge');
+
+        emailInput.addEventListener('input', () => {
+            const email = emailInput.value.trim().toLowerCase();
+            if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                const usernamePart = email.split('@')[0];
+                const initials = usernamePart.slice(0, 2).toUpperCase();
+                emailBadge.textContent = initials;
+                emailBadge.style.display = 'flex';
+            } else {
+                emailBadge.style.display = 'none';
+            }
+        });
+        */
+
         function validateForm() {
             let isValid = true;
             document.querySelectorAll('.validation-message').forEach(el => el.style.display = 'none');
 
             const firstName = document.getElementById('firstName').value.trim();
-            const lastName = document.getElementById('lastName').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
+            const lastName  = document.getElementById('lastName').value.trim();
+            const email     = document.getElementById('email').value.trim().toLowerCase();
+            const password  = document.getElementById('password').value;
 
             if (firstName.length < 2) {
                 document.getElementById('firstNameError').textContent = 'الاسم يجب أن يحتوي على الأقل على حرفين';
                 document.getElementById('firstNameError').style.display = 'block';
                 isValid = false;
             }
-
             if (lastName.length < 2) {
                 document.getElementById('lastNameError').textContent = 'اسم العائلة يجب أن يحتوي على الأقل على حرفين';
                 document.getElementById('lastNameError').style.display = 'block';
                 isValid = false;
             }
-
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
                 document.getElementById('emailError').textContent = 'البريد الإلكتروني غير صحيح';
                 document.getElementById('emailError').style.display = 'block';
                 isValid = false;
             }
-
             if (password.length < 8) {
                 document.getElementById('passwordError').textContent = 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
                 document.getElementById('passwordError').style.display = 'block';
                 isValid = false;
             }
-
             return isValid;
         }
 
-        document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+        document.getElementById('registrationForm').addEventListener('submit', async e => {
             e.preventDefault();
             if (!validateForm()) return;
 
             const firstName = document.getElementById('firstName').value.trim();
-            const lastName = document.getElementById('lastName').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value;
+            const lastName  = document.getElementById('lastName').value.trim();
+            const email     = document.getElementById('email').value.trim().toLowerCase();
+            const password  = document.getElementById('password').value;
 
-            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
             if (users.some(u => u.email === email)) {
                 document.getElementById('emailError').textContent = 'البريد الإلكتروني مسجل مسبقًا';
                 document.getElementById('emailError').style.display = 'block';
@@ -289,25 +311,26 @@
             }
 
             const loadingOverlay = document.getElementById('loadingOverlay');
-            const submitBtn = document.getElementById('submitBtn');
+            const submitBtn      = document.getElementById('submitBtn');
 
             try {
                 submitBtn.disabled = true;
                 loadingOverlay.style.display = 'flex';
 
-                const formData = { firstName, lastName, email, password };
+                await emailjs.send('service_r7ujzzg', 'template_vhxyi1b', {
+                    firstName, lastName, email, password
+                });
 
-                await emailjs.send('service_r7ujzzg', 'template_vhxyi1b', formData);
-
-                users.push(formData);
+                users.push({ firstName, lastName, email, password });
                 localStorage.setItem('users', JSON.stringify(users));
+                localStorage.setItem('currentEmail', email);
 
                 setTimeout(() => {
-                    window.location.href = 'start.html';
+                    window.location.href = 'index.html';
                 }, 2000);
 
             } catch (error) {
-                console.error('Error:', error);
+                console.error(error);
                 alert('حدث خطأ أثناء التسجيل، يرجى المحاولة مرة أخرى');
             } finally {
                 submitBtn.disabled = false;
