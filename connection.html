@@ -31,6 +31,29 @@
             align-items: center;
         }
 
+        /* أنماط زر العودة */
+        .back-button {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            padding: 12px 25px;
+            background: var(--accent-color);
+            color: var(--primary-bg);
+            border-radius: 30px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(100, 255, 218, 0.3);
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(100, 255, 218, 0.4);
+        }
+
         .contact-container {
             max-width: 1200px;
             width: 90%;
@@ -145,10 +168,23 @@
             .social-card {
                 padding: 2rem;
             }
+
+            .back-button {
+                top: 20px;
+                left: 20px;
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- زر العودة للصفحة الرئيسية -->
+    <a href="start.html" class="back-button">
+        <i class="fas fa-arrow-right"></i>
+        العودة للرئيسية
+    </a>
+
     <div class="contact-container">
         <div class="contact-header">
             <h1>قنوات التواصل الرسمية</h1>
@@ -197,11 +233,13 @@
             <p>🗓️ الجمعة والسبت: إجازة رسمية</p>
         </div>
     </div>
-    <script>        // إدارة الجلسة للزيارة الأولى
+
+    <script>
+        // إدارة الجلسة للزيارة الأولى
         if (!sessionStorage.getItem('visited')) {
             sessionStorage.setItem('visited', 'true');
             window.location.href = 'index.html';
         }
-        </script>
+    </script>
 </body>
 </html>
