@@ -17,14 +17,12 @@
             --error-color: #ff647f;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Tajawal', sans-serif;
+        * { 
+            margin:0; 
+            padding:0; 
+            box-sizing:border-box; 
+            font-family:'Tajawal', sans-serif; 
         }
-
         body {
             background: linear-gradient(135deg, var(--primary-bg), var(--secondary-bg));
             color: var(--text-primary);
@@ -37,6 +35,12 @@
             overflow-y: auto;
         }
 
+        /* تعديلات إخفاء الأحرف الأولى */
+        .email-badge {
+            display: none !important;
+        }
+
+        /* بقية الأنماط كما هي */
         .platform-logo {
             position: absolute;
             top: 30px;
@@ -48,228 +52,213 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 2.5rem;
+            color: white;
+            overflow: hidden;
             z-index: 1000;
         }
-
         .platform-logo img {
             width: 60%;
             height: 60%;
             object-fit: contain;
-            filter: brightness(0) invert(1);
+            filter: none !important;
         }
 
         .container {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.05);
             backdrop-filter: blur(15px);
             border-radius: 20px;
             padding: 2rem;
             width: 90%;
             max-width: 500px;
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.3);
             margin-top: 120px;
         }
-
-        .form-header {
-            text-align: center;
-            margin-bottom: 2rem;
+        .form-header { 
+            text-align:center; 
+            margin-bottom:2rem; 
         }
-
         .form-header h1 {
             background: linear-gradient(45deg, var(--accent-color), #00a8cc);
-            -webkit-background-clip: text;
+            -webkit-background-clip: text; 
             -webkit-text-fill-color: transparent;
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+            font-size:2.5rem; 
+            margin-bottom:0.5rem;
         }
-
-        .form-header p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
+        .form-header p { 
+            color: var(--text-secondary); 
+            font-size:1.1rem; 
         }
 
         .input-group {
-            position: relative;
-            margin-bottom: 1.5rem;
+            position: relative; 
+            margin-bottom:1.5rem;
         }
-
         .input-group input {
-            width: 100%;
-            padding: 1rem;
-            background: var(--input-bg);
-            border: 2px solid transparent;
-            border-radius: 10px;
+            width:100%; 
+            padding:1rem; 
+            padding-left:2.5rem;
+            background: var(--input-bg); 
+            border:2px solid transparent;
+            border-radius:10px; 
             color: var(--text-primary);
-            font-size: 1rem;
+            font-size:1rem; 
             transition: var(--transition);
-            padding-left: 2.5rem;
         }
-
         .input-group input:focus {
             border-color: var(--accent-color);
-            box-shadow: 0 0 15px rgba(100, 255, 218, 0.2);
+            box-shadow:0 0 15px rgba(100,255,218,0.2);
         }
-
         .input-group i {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
+            position:absolute; 
+            left:1rem; 
+            top:50%; 
+            transform:translateY(-50%);
+            color: var(--text-secondary); 
+            cursor: default;
         }
-
-        .password-toggle {
-            cursor: pointer;
-            transition: var(--transition);
+        .password-toggle { 
+            cursor:pointer; 
         }
-
-        .password-toggle:hover {
-            color: var(--accent-color);
+        .password-toggle:hover { 
+            color: var(--accent-color); 
         }
 
         .remember-forgot {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 1.5rem 0;
+            display:flex; 
+            justify-content:space-between; 
+            align-items:center;
+            margin:1.5rem 0;
         }
-
-        .remember-me {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: var(--text-secondary);
+        .remember-me { 
+            display:flex; 
+            align-items:center; 
+            gap:0.5rem; 
+            color: var(--text-secondary); 
         }
-
-        .remember-me input {
-            accent-color: var(--accent-color);
+        .remember-me input { 
+            accent-color: var(--accent-color); 
         }
-
         .forgot-password {
-            color: var(--accent-color);
-            text-decoration: none;
+            color: var(--accent-color); 
+            text-decoration:none;
             transition: var(--transition);
         }
-
         .forgot-password:hover {
-            text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+            text-shadow:0 0 10px rgba(100,255,218,0.3);
         }
 
         .submit-btn {
             background: linear-gradient(45deg, var(--accent-color), #00a8cc);
             color: var(--primary-bg);
-            width: 100%;
-            padding: 1rem;
-            border: none;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            cursor: pointer;
+            width:100%; 
+            padding:1rem; 
+            border:none; 
+            border-radius:10px;
+            font-size:1.1rem; 
+            cursor:pointer; 
             transition: var(--transition);
-            position: relative;
-            overflow: hidden;
+            position:relative; 
+            overflow:hidden;
         }
-
         .submit-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(100, 255, 218, 0.3);
+            box-shadow:0 5px 15px rgba(100,255,218,0.3);
         }
 
-        .social-login {
-            margin: 2rem 0;
-            text-align: center;
+        .social-login { 
+            margin:2rem 0; 
+            text-align:center; 
         }
-
         .social-text {
-            color: var(--text-secondary);
-            position: relative;
-            margin: 1rem 0;
+            color: var(--text-secondary); 
+            position:relative; 
+            margin:1rem 0;
         }
-
-        .social-text::before,
+        .social-text::before, 
         .social-text::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            width: 30%;
-            height: 1px;
-            background: var(--text-secondary);
-            opacity: 0.3;
+            content:''; 
+            position:absolute; 
+            top:50%; 
+            width:30%; 
+            height:1px;
+            background: var(--text-secondary); 
+            opacity:0.3;
+        }
+        .social-text::before { 
+            right:0; 
+        } 
+        .social-text::after { 
+            left:0; 
         }
 
-        .social-text::before { right: 0; }
-        .social-text::after { left: 0; }
-
-        .social-icons {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
+        .social-icons { 
+            display:flex; 
+            justify-content:center; 
+            gap:1rem; 
         }
-
         .social-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-decoration: none;
+            width:45px; 
+            height:45px; 
+            border-radius:50%;
+            display:flex; 
+            align-items:center; 
+            justify-content:center;
+            color:white; 
+            text-decoration:none; 
             transition: var(--transition);
         }
-
-        .google { background: #db4437; }
-        .facebook { background: #3b5998; }
-
+        .google { 
+            background:#db4437; 
+        } 
+        .facebook { 
+            background:#3b5998; 
+        }
         .social-icon:hover {
             transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            box-shadow:0 5px 15px rgba(0,0,0,0.3);
         }
 
-        .register-link {
-            text-align: center;
-            margin-top: 1.5rem;
+        .register-link { 
+            text-align:center; 
+            margin-top:1.5rem; 
         }
-
         .register-link a {
-            color: var(--accent-color);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+            color: var(--accent-color); 
+            text-decoration:none;
+            display:flex; 
+            align-items:center; 
+            justify-content:center; 
+            gap:0.5rem;
             transition: var(--transition);
         }
-
         .register-link a:hover {
-            text-shadow: 0 0 10px rgba(100, 255, 218, 0.3);
+            text-shadow:0 0 10px rgba(100,255,218,0.3);
         }
 
         .error-message {
-            color: var(--error-color);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            display: none;
+            color: var(--error-color); 
+            font-size:0.9rem;
+            margin-top:0.5rem; 
+            display:none;
         }
 
-        @media (max-width: 768px) {
-            .container {
-                padding: 1.5rem;
-                margin-top: 100px;
+        @media (max-width:768px){
+            .container { 
+                padding:1.5rem; 
+                margin-top:100px; 
             }
-            
-            .form-header h1 {
-                font-size: 2rem;
+            .form-header h1 { 
+                font-size:2rem; 
             }
         }
-              .platform-logo img {
-    filter: none;
-}
-
     </style>
 </head>
 <body>
-    <div class="platform-logo">
-        <img src="3e50cb7e-3077-471a-8749-9864648da119.png" alt="شعار المنصة">
+    <div class="platform-logo" id="platformLogo">
+        <img src="3e50cb7e-3077-471a-8749-9864648da119.png" alt="شعار المنصة" id="logoImg">
     </div>
+    <div class="email-badge" id="emailBadge"></div>
 
     <div class="container">
         <div class="form-header">
@@ -302,12 +291,8 @@
             <div class="social-login">
                 <p class="social-text">أو سجل الدخول باستخدام</p>
                 <div class="social-icons">
-                    <a href="#" class="social-icon google">
-                        <i class="fab fa-google"></i>
-                    </a>
-                    <a href="#" class="social-icon facebook">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
+                    <a href="#" class="social-icon google"><i class="fab fa-google"></i></a>
+                    <a href="#" class="social-icon facebook"><i class="fab fa-facebook-f"></i></a>
                 </div>
             </div>
 
@@ -320,81 +305,63 @@
     <script>
         emailjs.init('nf2gRwNiQobOFrImW');
         const users = JSON.parse(localStorage.getItem('users')) || [];
-
-        // عناصر DOM
         const form = document.getElementById('loginForm');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
-        const passwordToggle = document.querySelector('.fa-lock');
+        const passwordToggle = document.querySelector('.password-toggle');
         const errorMessages = document.querySelectorAll('.error-message');
 
-        // تفعيل إظهار/إخفاء كلمة المرور
+        // إظهار/إخفاء كلمة المرور
         passwordToggle.addEventListener('click', () => {
             passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
             passwordToggle.classList.toggle('fa-lock-open');
         });
 
-        // التحقق من صحة البيانات
-        const validateForm = () => {
-            let isValid = true;
-            const email = emailInput.value.trim();
-            const password = passwordInput.value;
-
-            // إخفاء جميع رسائل الخطأ
-            errorMessages.forEach(msg => msg.style.display = 'none');
-
-            // التحقق من البريد الإلكتروني
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        // التحقق من صحة النموذج
+        function validateForm() {
+            let valid = true;
+            errorMessages.forEach(m => m.style.display = 'none');
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim())) {
                 emailInput.nextElementSibling.style.display = 'block';
-                isValid = false;
+                valid = false;
             }
-
-            // التحقق من كلمة المرور
-            if (password.length < 8) {
+            if (passwordInput.value.length < 8) {
                 passwordInput.nextElementSibling.style.display = 'block';
-                isValid = false;
+                valid = false;
             }
+            return valid;
+        }
 
-            return isValid;
-        };
-
-        // إرسال النموذج
-        form.addEventListener('submit', async (e) => {
+        // معالجة الإرسال
+        form.addEventListener('submit', async e => {
             e.preventDefault();
-            
             if (!validateForm()) return;
-
             const btn = document.getElementById('loginBtn');
             btn.disabled = true;
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحقق...';
 
             try {
                 const user = users.find(u => u.email === emailInput.value.trim());
-                
                 if (!user) throw new Error('البريد الإلكتروني غير مسجل');
                 if (user.password !== passwordInput.value) throw new Error('كلمة المرور غير صحيحة');
 
-                // إرسال الإشعار عبر البريد
-                await emailjs.send("service_r7ujzzg", "template_vhxyi1b", {
-                    email: user.email,
-                    name: user.firstName + ' ' + user.lastName
-                });
-
-                // حفظ حالة المستخدم
-                sessionStorage.setItem('currentUser', JSON.stringify(user));
+                // حفظ البيانات في localStorage
+                localStorage.setItem('currentEmail', emailInput.value.trim());
+                
+                // إعادة توجيه
                 window.location.href = 'start.html';
 
-            } catch (error) {
-                alert(error.message);
+            } catch (err) {
+                alert(err.message);
             } finally {
                 btn.disabled = false;
                 btn.innerHTML = 'تسجيل الدخول';
             }
         });
 
-        // إدارة الجلسة للزيارة الأولى
+        // منع الولوج المباشر قبل أول زيارة
         if (!sessionStorage.getItem('visited')) {
-            sessionStorage.setItem('visited', 'true');
+            sessionStorage.setItem('visited','true');
             window.location.href = 'index.html';
         }
     </script>
