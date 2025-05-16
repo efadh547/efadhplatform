@@ -237,15 +237,15 @@
             });
         }
 
-        // تأثير النقر على الأزرار
         document.querySelectorAll('.semester-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                this.style.transform = 'scale(0.95)';
-                setTimeout(() => {
-                    window.location.href = this.dataset.link;
-                }, 300);
-            });
-        });
+    btn.addEventListener('click', function() {
+        this.style.transform = 'scale(0.95)';
+        setTimeout(() => {
+            window.open(this.dataset.link, '_blank'); // فتح الرابط في صفحة جديدة
+        }, 300);
+    });
+});
+
 
         // إدارة الجلسة للزيارة الأولى
         if (!sessionStorage.getItem('visited')) {
