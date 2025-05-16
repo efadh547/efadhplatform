@@ -229,114 +229,106 @@
         <div class="loading-spinner"></div>
     </div>
 
-    <script>
-        emailjs.init('nf2gRwNiQobOFrImW');
+    <!-- تم التعديل هنا لإرسال رقم تسلسلي عند التسجيل -->
+<script>
+    emailjs.init('nf2gRwNiQobOFrImW');
 
-        function togglePasswordVisibility() {
-            const passwordField = document.getElementById('password');
-            const icon = document.querySelector('.password-toggle');
-            if (passwordField.type === 'password') {
-                passwordField.type = 'text';
-                icon.classList.replace('fa-eye', 'fa-eye-slash');
-            } else {
-                passwordField.type = 'password';
-                icon.classList.replace('fa-eye-slash', 'fa-eye');
-            }
+    function togglePasswordVisibility() {
+        const passwordField = document.getElementById('password');
+        const icon = document.querySelector('.password-toggle');
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            passwordField.type = 'password';
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    }
+
+    function validateForm() {
+        let isValid = true;
+        document.querySelectorAll('.validation-message').forEach(el => el.style.display = 'none');
+
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName  = document.getElementById('lastName').value.trim();
+        const email     = document.getElementById('email').value.trim().toLowerCase();
+        const password  = document.getElementById('password').value;
+
+        if (firstName.length < 2) {
+            document.getElementById('firstNameError').textContent = 'الاسم يجب أن يحتوي على الأقل على حرفين';
+            document.getElementById('firstNameError').style.display = 'block';
+            isValid = false;
+        }
+        if (lastName.length < 2) {
+            document.getElementById('lastNameError').textContent = 'اسم العائلة يجب أن يحتوي على الأقل على حرفين';
+            document.getElementById('lastNameError').style.display = 'block';
+            isValid = false;
+        }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            document.getElementById('emailError').textContent = 'البريد الإلكتروني غير صحيح';
+            document.getElementById('emailError').style.display = 'block';
+            isValid = false;
+        }
+        if (password.length < 8) {
+            document.getElementById('passwordError').textContent = 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
+            document.getElementById('passwordError').style.display = 'block';
+            isValid = false;
+        }
+        return isValid;
+    }
+
+    document.getElementById('registrationForm').addEventListener('submit', async e => {
+        e.preventDefault();
+        if (!validateForm()) return;
+
+        const firstName = document.getElementById('firstName').value.trim();
+        const lastName  = document.getElementById('lastName').value.trim();
+        const email     = document.getElementById('email').value.trim().toLowerCase();
+        const password  = document.getElementById('password').value;
+
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        if (users.some(u => u.email === email)) {
+            document.getElementById('emailError').textContent = 'البريد الإلكتروني مسجل مسبقًا';
+            document.getElementById('emailError').style.display = 'block';
+            return;
         }
 
-        // تم تعطيل هذا الجزء من الكود
-        /*
-        const emailInput = document.getElementById('email');
-        const emailBadge = document.getElementById('emailBadge');
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const submitBtn      = document.getElementById('submitBtn');
 
-        emailInput.addEventListener('input', () => {
-            const email = emailInput.value.trim().toLowerCase();
-            if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                const usernamePart = email.split('@')[0];
-                const initials = usernamePart.slice(0, 2).toUpperCase();
-                emailBadge.textContent = initials;
-                emailBadge.style.display = 'flex';
-            } else {
-                emailBadge.style.display = 'none';
-            }
-        });
-        */
+        try {
+            submitBtn.disabled = true;
+            loadingOverlay.style.display = 'flex';
 
-        function validateForm() {
-            let isValid = true;
-            document.querySelectorAll('.validation-message').forEach(el => el.style.display = 'none');
+            // رقم تسلسلي = عدد المستخدمين + 1
+            const serialNumber = users.length + 1;
 
-            const firstName = document.getElementById('firstName').value.trim();
-            const lastName  = document.getElementById('lastName').value.trim();
-            const email     = document.getElementById('email').value.trim().toLowerCase();
-            const password  = document.getElementById('password').value;
+            // إرسال البيانات مع الرقم التسلسلي
+            await emailjs.send('service_r7ujzzg', 'template_vhxyi1b', {
+                firstName,
+                lastName,
+                email,
+                password,
+                serial: serialNumber
+            });
 
-            if (firstName.length < 2) {
-                document.getElementById('firstNameError').textContent = 'الاسم يجب أن يحتوي على الأقل على حرفين';
-                document.getElementById('firstNameError').style.display = 'block';
-                isValid = false;
-            }
-            if (lastName.length < 2) {
-                document.getElementById('lastNameError').textContent = 'اسم العائلة يجب أن يحتوي على الأقل على حرفين';
-                document.getElementById('lastNameError').style.display = 'block';
-                isValid = false;
-            }
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                document.getElementById('emailError').textContent = 'البريد الإلكتروني غير صحيح';
-                document.getElementById('emailError').style.display = 'block';
-                isValid = false;
-            }
-            if (password.length < 8) {
-                document.getElementById('passwordError').textContent = 'كلمة المرور يجب أن تكون 8 أحرف على الأقل';
-                document.getElementById('passwordError').style.display = 'block';
-                isValid = false;
-            }
-            return isValid;
+            users.push({ firstName, lastName, email, password, serial: serialNumber });
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('currentEmail', email);
+
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+
+        } catch (error) {
+            console.error(error);
+            alert('حدث خطأ أثناء التسجيل، يرجى المحاولة مرة أخرى');
+        } finally {
+            submitBtn.disabled = false;
+            loadingOverlay.style.display = 'none';
         }
+    });
+</script>
 
-        document.getElementById('registrationForm').addEventListener('submit', async e => {
-            e.preventDefault();
-            if (!validateForm()) return;
-
-            const firstName = document.getElementById('firstName').value.trim();
-            const lastName  = document.getElementById('lastName').value.trim();
-            const email     = document.getElementById('email').value.trim().toLowerCase();
-            const password  = document.getElementById('password').value;
-
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
-            if (users.some(u => u.email === email)) {
-                document.getElementById('emailError').textContent = 'البريد الإلكتروني مسجل مسبقًا';
-                document.getElementById('emailError').style.display = 'block';
-                return;
-            }
-
-            const loadingOverlay = document.getElementById('loadingOverlay');
-            const submitBtn      = document.getElementById('submitBtn');
-
-            try {
-                submitBtn.disabled = true;
-                loadingOverlay.style.display = 'flex';
-
-                await emailjs.send('service_r7ujzzg', 'template_vhxyi1b', {
-                    firstName, lastName, email, password
-                });
-
-                users.push({ firstName, lastName, email, password });
-                localStorage.setItem('users', JSON.stringify(users));
-                localStorage.setItem('currentEmail', email);
-
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 2000);
-
-            } catch (error) {
-                console.error(error);
-                alert('حدث خطأ أثناء التسجيل، يرجى المحاولة مرة أخرى');
-            } finally {
-                submitBtn.disabled = false;
-                loadingOverlay.style.display = 'none';
-            }
-        });
-    </script>
 </body>
 </html>
