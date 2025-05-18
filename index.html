@@ -341,9 +341,13 @@
             btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري التحقق...';
 
             try {
-                const user = users.find(u => u.email === emailInput.value.trim());
+            const user = users.find(u => u.email === emailInput.value.trim());
                 if (!user) throw new Error('البريد الإلكتروني غير مسجل');
-                if (user.password !== passwordInput.value) throw new Error('كلمة المرور غير صحيحة');
+                // في جزء معالجة الإرسال
+            if (user.password !== btoa(passwordInput.value)) {
+
+             throw new Error('كلمة المرور غير صحيحة');
+            }
 
                 // حفظ البيانات في localStorage
                 localStorage.setItem('currentEmail', emailInput.value.trim());
