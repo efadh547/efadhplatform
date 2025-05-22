@@ -194,7 +194,7 @@
 </div>
 
 <script>
-emailjs.init('nf2gRwNiQobOFrImW');
+emailjs.init('8lbWk4kyljlAVcPee');
 
 let generatedCode = null;
 let tempUserData = null;
@@ -245,7 +245,7 @@ async function sendAdminNotification(userData) {
                             .then(response => response.json())
                             .then(data => data.ip);
 
-        await emailjs.send('service_r7ujzzg', 'template_vhxyi1b', {
+        await emailjs.send('service_y0ycqsj', 'template_vluv21s', {
             firstName: userData.firstName,
             lastName: userData.lastName,
             email: userData.email,
@@ -281,7 +281,7 @@ document.getElementById('registrationForm').addEventListener('submit', async e =
     try {
         document.getElementById('loadingOverlay').style.display = 'flex';
 
-        await emailjs.send('service_r7ujzzg', 'template_aeprzd1', {
+        await emailjs.send('service_y0ycqsj', 'template_4cg2qxm', {
             firstName, lastName, email, code: generatedCode
         });
 
